@@ -1,23 +1,25 @@
 package main.java.com;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Autocomplete {
 
     private Node trie;
+    private Map<String, Integer> words;
+    private final int SIZE = 3;
 
-    public Autocomplete(List<String> dict) {
+    public Autocomplete(Map<String, Integer> words) {
+        this.words = words;
         trie = new Node("");
-        for (String s : dict) {
-            insertWord(s);
+
+        for (String word : words.keySet()) {
+            insertWord(word);
         }
     }
 
-    private void insertWord(String s) {
+    private void insertWord(String  s) {
         Node curr = trie;
+
         for (int i = 0; i < s.length(); i++) {
             if (!curr.childrens.containsKey(s.charAt(i))) {
                 curr.childrens.put(s.charAt(i),
@@ -32,8 +34,13 @@ public class Autocomplete {
         }
     }
 
-    public List<String> getWordsForPrefix(String prefix) {
-        List<String> results = new ArrayList<>();
+    public List<String> getTopKWordsForPrefix(String prefix) {
+        return new ArrayList<>(getTopKSuggestions(prefix));
+    }
+
+    private PriorityQueue<String> getTopKSuggestions(String prefix) {
+        PriorityQueue<String> results =
+                new PriorityQueue<>(SIZE, Comparator.comparingInt(s -> words.get(s)));
 
         Node curr = trie;
 
@@ -51,9 +58,12 @@ public class Autocomplete {
         return results;
     }
 
-    private void findAllChildWords(Node node, List<String> results) {
+    private void findAllChildWords(Node node, PriorityQueue<String> results) {
         if (node.isWord) {
             results.add(node.prefix);
+            if (results.size() > SIZE) {
+                results.poll();
+            }
         }
 
         for (char c : node.childrens.keySet()) {
