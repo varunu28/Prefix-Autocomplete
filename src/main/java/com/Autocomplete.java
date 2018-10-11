@@ -6,7 +6,9 @@ public class Autocomplete {
 
     private Node trie;
     private Map<String, Integer> words;
+    private LRUCache cache;
     private final int SIZE = 3;
+    private final int CACHE_SIZE = 5;
 
     public Autocomplete(Map<String, Integer> words) {
         this.words = words;
@@ -15,6 +17,8 @@ public class Autocomplete {
         for (String word : words.keySet()) {
             insertWord(word);
         }
+
+        cache = new LRUCache(CACHE_SIZE);
     }
 
     private void insertWord(String  s) {
@@ -35,12 +39,21 @@ public class Autocomplete {
     }
 
     public List<String> getTopKWordsForPrefix(String prefix) {
-        return new ArrayList<>(getTopKSuggestions(prefix));
+        if (cache.get(prefix).size() > 0) {
+            return cache.get(prefix);
+        }
+
+        System.out.println("Reached here");
+
+        List<String> topKWords = new ArrayList<>(getTopKSuggestions(prefix));
+        cache.put(prefix, topKWords);
+
+        return topKWords;
     }
 
     private PriorityQueue<String> getTopKSuggestions(String prefix) {
         PriorityQueue<String> results =
-                new PriorityQueue<>(SIZE, Comparator.comparingInt(s -> words.get(s)));
+                new PriorityQueue<>(SIZE, (s1, s2) -> words.get(s2) - words.get(s1));
 
         Node curr = trie;
 

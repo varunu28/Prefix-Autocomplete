@@ -14,15 +14,11 @@ public class Runner {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        long startTime = System.currentTimeMillis();
-
-        autocomplete.
-            getTopKWordsForPrefix(br.readLine()).
-            stream().
-            forEach(System.out::println);
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println(endTime - startTime);
+        while (true) {
+            autocomplete.
+                    getTopKWordsForPrefix(br.readLine()).
+                    stream().
+                    forEach(System.out::println);
+        }
     }
 }
