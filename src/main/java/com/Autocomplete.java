@@ -31,6 +31,7 @@ public class Autocomplete {
             }
 
             curr = curr.childrens.get(s.charAt(i));
+            curr.completions.add(s);
 
             if (i == s.length() - 1) {
                 curr.isWord = true;
@@ -42,8 +43,6 @@ public class Autocomplete {
         if (cache.get(prefix).size() > 0) {
             return cache.get(prefix);
         }
-
-        System.out.println("Reached here");
 
         List<String> topKWords = new ArrayList<>(getTopKSuggestions(prefix));
         cache.put(prefix, topKWords);
@@ -66,32 +65,44 @@ public class Autocomplete {
             }
         }
 
-        findAllChildWords(curr, results);
+//        findAllChildWords(curr, results);
 
-        return results;
-    }
-
-    private void findAllChildWords(Node node, PriorityQueue<String> results) {
-        if (node.isWord) {
-            results.add(node.prefix);
+        // Pre-saving all completions rather than traversing the tree to find the valid words
+        List<String> completions = curr.completions;
+        for (String word : completions) {
+            results.add(word);
             if (results.size() > SIZE) {
                 results.poll();
             }
         }
 
-        for (char c : node.childrens.keySet()) {
-            findAllChildWords(node.childrens.get(c), results);
-        }
+        return results;
     }
+
+//    private void findAllChildWords(Node node, PriorityQueue<String> results) {
+//        if (node.isWord) {
+//            results.add(node.prefix);
+//            if (results.size() > SIZE) {
+//                results.poll();
+//            }
+//        }
+//
+//        for (char c : node.childrens.keySet()) {
+//            findAllChildWords(node.childrens.get(c), results);
+//        }
+//    }
 
     private static final class Node {
         String prefix;
         Map<Character, Node> childrens;
+        List<String> completions;
+
         boolean isWord;
 
         public Node(String prefix) {
             this.prefix = prefix;
             this.childrens = new HashMap<>();
+            completions = new ArrayList<>();
         }
     }
 }

@@ -16,9 +16,9 @@ public class Runner {
 
         while (true) {
             autocomplete.
-                    getTopKWordsForPrefix(br.readLine()).
-                    stream().
-                    forEach(System.out::println);
+                getTopKWordsForPrefix(br.readLine()).
+                stream().
+                forEach(System.out::println);
         }
     }
 }
