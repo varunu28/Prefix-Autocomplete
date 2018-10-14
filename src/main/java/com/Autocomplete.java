@@ -44,7 +44,7 @@ public class Autocomplete {
 
             if (hasSplit) {
                 curr.hasSplit = true;
-                curr.splitWord = completeSplitWord;
+                curr.associatedWords.add(completeSplitWord);
             }
 
             if (i == s.length() - 1) {
@@ -89,8 +89,8 @@ public class Autocomplete {
         }
 
         if (curr.hasSplit) {
-            results.add(curr.splitWord);
-            if (results.size() > SIZE) {
+            results.addAll(curr.associatedWords);
+            while (results.size() > SIZE) {
                 results.poll();
             }
         }

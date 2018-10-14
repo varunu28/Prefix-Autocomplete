@@ -12,11 +12,12 @@ public class Node {
 
     boolean isWord;
     boolean hasSplit;
-    String splitWord;
+    List<String> associatedWords;
 
     public Node(String prefix) {
         this.prefix = prefix;
         this.childrens = new HashMap<>();
         completions = new ArrayList<>();
+        associatedWords = new ArrayList<>();
     }
 }
