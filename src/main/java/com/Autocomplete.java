@@ -18,18 +18,18 @@ public class Autocomplete {
             if (word.indexOf('_') != -1) {
                 String[] split = word.split("_");
                 for (String s : split) {
-                    insertWordWithSplit(s, word);
+                    insertWord(s, word, true);
                 }
             }
             else {
-                insertWord(word);
+                insertWord(word, "", false);
             }
         }
 
         cache = new LRUCache(CACHE_SIZE);
     }
 
-    private void insertWordWithSplit(String  s, String word) {
+    private void insertWord(String  s, String completeSplitWord, boolean hasSplit) {
         Node curr = trie;
         for (int i = 0; i < s.length(); i++) {
             if (!curr.childrens.containsKey(s.charAt(i))) {
@@ -38,26 +38,14 @@ public class Autocomplete {
             }
 
             curr = curr.childrens.get(s.charAt(i));
+
+            // Pre-saving all completions rather than traversing the tree to find the valid words
             curr.completions.add(s);
-            curr.hasSplit = true;
-            curr.splitWord = word;
 
-            if (i == s.length() - 1) {
-                curr.isWord = true;
+            if (hasSplit) {
+                curr.hasSplit = true;
+                curr.splitWord = completeSplitWord;
             }
-        }
-    }
-
-    private void insertWord(String  s) {
-        Node curr = trie;
-        for (int i = 0; i < s.length(); i++) {
-            if (!curr.childrens.containsKey(s.charAt(i))) {
-                curr.childrens.put(s.charAt(i),
-                        new Node(s.substring(0, i+1)));
-            }
-
-            curr = curr.childrens.get(s.charAt(i));
-            curr.completions.add(s);
 
             if (i == s.length() - 1) {
                 curr.isWord = true;
@@ -91,8 +79,8 @@ public class Autocomplete {
             }
         }
 
-        // Pre-saving all completions rather than traversing the tree to find the valid words
         List<String> completions = curr.completions;
+
         for (String word : completions) {
             results.add(word);
             if (results.size() > SIZE) {
@@ -108,21 +96,5 @@ public class Autocomplete {
         }
 
         return results;
-    }
-
-    private static final class Node {
-        String prefix;
-        Map<Character, Node> childrens;
-        List<String> completions;
-
-        boolean isWord;
-        boolean hasSplit;
-        String splitWord;
-
-        public Node(String prefix) {
-            this.prefix = prefix;
-            this.childrens = new HashMap<>();
-            completions = new ArrayList<>();
-        }
     }
 }
