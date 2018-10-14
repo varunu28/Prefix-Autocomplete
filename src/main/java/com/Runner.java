@@ -9,9 +9,7 @@ public class Runner {
     public static void main(String[] args) throws IOException {
 
         Map<String, Integer> words = new InputDataProcessor().getInputData();
-
         Autocomplete autocomplete = new Autocomplete(words);
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
