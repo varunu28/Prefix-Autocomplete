@@ -43,8 +43,7 @@ public class Autocomplete {
             curr.completions.add(s);
 
             if (hasSplit) {
-                curr.hasSplit = true;
-                curr.associatedWords.add(completeSplitWord);
+                curr.completions.add(completeSplitWord);
             }
 
             if (i == s.length() - 1) {
@@ -84,13 +83,6 @@ public class Autocomplete {
         for (String word : completions) {
             results.add(word);
             if (results.size() > SIZE) {
-                results.poll();
-            }
-        }
-
-        if (curr.hasSplit) {
-            results.addAll(curr.associatedWords);
-            while (results.size() > SIZE) {
                 results.poll();
             }
         }
