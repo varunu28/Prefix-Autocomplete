@@ -8,7 +8,7 @@ public class Autocomplete {
     private Map<String, Integer> words;
     private LRUCache cache;
     private Map<String, List<String>> prefixMap;
-    private final int SIZE = 4;
+    private final int SIZE = 10;
     private final int CACHE_SIZE = 5;
 
     public Autocomplete(Map<String, Integer> words) {

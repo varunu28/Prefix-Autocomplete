@@ -11,9 +11,16 @@ So for a list of words such as below:
 
 If we provide a prefix of ```rev```, it would pick up all the four words while performing an autocomplete.
 
+## How to run it?
 
+ - Open the project in any IDE (Preferably IntelliJ)
+ - I have a sample file in src/resources called ```data.txt``` containing 2000 words with associated weights. If you want to change it, then upload your file with same name. If you change the filename then you would have to make changes in ```InputDataProcessor.java```
+ - Run the ```Runner.java``` and start adding prefixes. You will be getting top 10 suggestions for the prefix (If there are at least 10 words starting with that prefix or else you will get less number of suggestions)
+ - For changing cache size(```CACHE_SIZE```) or suggestions limit (```SIZE```) change the corresponding values in ```Autocomplete.java```
+ - Open an issue if you find any difficulty while running the code
+  
 ## Design
-When we hear autocomplete, the first thing that comes to our mind is ```trie```. That one data structure which gets overshadowed by complex tree traversals :P 
+When we hear autocomplete, the first thing that comes to our mind is ```trie```. That one data structure which gets overshadowed by complex tree traversals :stuck_out_tongue: 
 
 So when I started working on this project, I had a slight idea on how to approach this problem as there is a specific data structure assigned for this task in computer science. I created a a POC and then moved on to optimize my approach in order to make the task of getting top suggestions as fast as possible. 
 
@@ -89,3 +96,7 @@ As we have stored the prefix and associated words in a map, it becomes a ```Key-
 
  - A fuzzy search functionality so that it can pick up partial words without an underscore
  - Code for updating and writing to a ```Redis``` database and wrapper around database operations to make ```CRUD``` operations on database easier.
+ - Code to wipe out existing database of words and upload new word-list using a text file or an S3 bucket
+ - Dockerize the application
+
+#### PR/Issues are welcome

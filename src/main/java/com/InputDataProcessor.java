@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class InputDataProcessor {
 
-    public String pathname = "/home/varunu28/Documents/PrefixAutocomplete/src/resources/data.txt";
+    public String pathname = "src/resources/data.txt";
 
     public Map<String, Integer> getInputData() throws IOException {
         Map<String, Integer> words = new HashMap<>();
