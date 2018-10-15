@@ -21,12 +21,6 @@ public class InputDataProcessor {
         while ((st = br.readLine()) != null) {
             String word = st.split(",")[0];
             int weight = Integer.parseInt(st.split(",")[1]);
-            if (word.indexOf('_') != -1) {
-                String[] split = word.split("_");
-                for (String s : split) {
-                    words.putIfAbsent(s, weight);
-                }
-            }
 
             words.put(word, words.getOrDefault(word, 0) + weight);
         }

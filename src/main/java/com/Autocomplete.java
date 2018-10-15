@@ -7,12 +7,14 @@ public class Autocomplete {
     private Node trie;
     private Map<String, Integer> words;
     private LRUCache cache;
-    private final int SIZE = 3;
+    private Map<String, List<String>> prefixMap;
+    private final int SIZE = 4;
     private final int CACHE_SIZE = 5;
 
     public Autocomplete(Map<String, Integer> words) {
         this.words = words;
         trie = new Node("");
+        prefixMap = new HashMap<>();
 
         for (String word : words.keySet()) {
             if (word.indexOf('_') != -1) {
@@ -46,6 +48,8 @@ public class Autocomplete {
                 curr.completions.add(completeSplitWord);
             }
 
+            prefixMap.putIfAbsent(curr.prefix, curr.completions);
+
             if (i == s.length() - 1) {
                 curr.isWord = true;
             }
@@ -57,36 +61,50 @@ public class Autocomplete {
             return cache.get(prefix);
         }
 
-        List<String> topKWords = new ArrayList<>(getTopKSuggestions(prefix));
-        cache.put(prefix, topKWords);
-
-        return topKWords;
-    }
-
-    private PriorityQueue<String> getTopKSuggestions(String prefix) {
         PriorityQueue<String> results =
                 new PriorityQueue<>(SIZE, Comparator.comparingInt(s -> words.get(s)));
+        List<String> wordsForPrefix = prefixMap.getOrDefault(prefix, new ArrayList<>());
 
-        Node curr = trie;
-
-        for (char c : prefix.toCharArray()) {
-            if (curr.childrens.containsKey(c)) {
-                curr = curr.childrens.get(c);
+        for (String word : wordsForPrefix) {
+            if (words.containsKey(word)) {
+                results.add(word);
             }
-            else {
-                return results;
-            }
-        }
 
-        List<String> completions = curr.completions;
-
-        for (String word : completions) {
-            results.add(word);
             if (results.size() > SIZE) {
                 results.poll();
             }
         }
 
-        return results;
+        List<String> topKWords = new ArrayList<>(results);
+        cache.put(prefix, topKWords);
+
+        return topKWords;
     }
+
+//    private PriorityQueue<String> getTopKSuggestions(String prefix) {
+//        PriorityQueue<String> results =
+//                new PriorityQueue<>(SIZE, Comparator.comparingInt(s -> words.get(s)));
+//
+//        Node curr = trie;
+//
+//        for (char c : prefix.toCharArray()) {
+//            if (curr.childrens.containsKey(c)) {
+//                curr = curr.childrens.get(c);
+//            }
+//            else {
+//                return results;
+//            }
+//        }
+//
+//        List<String> completions = curr.completions;
+//
+//        for (String word : completions) {
+//            results.add(word);
+//            if (results.size() > SIZE) {
+//                results.poll();
+//            }
+//        }
+//
+//        return results;
+//    }
 }
