@@ -80,31 +80,4 @@ public class Autocomplete {
 
         return topKWords;
     }
-
-//    private PriorityQueue<String> getTopKSuggestions(String prefix) {
-//        PriorityQueue<String> results =
-//                new PriorityQueue<>(SIZE, Comparator.comparingInt(s -> words.get(s)));
-//
-//        Node curr = trie;
-//
-//        for (char c : prefix.toCharArray()) {
-//            if (curr.childrens.containsKey(c)) {
-//                curr = curr.childrens.get(c);
-//            }
-//            else {
-//                return results;
-//            }
-//        }
-//
-//        List<String> completions = curr.completions;
-//
-//        for (String word : completions) {
-//            results.add(word);
-//            if (results.size() > SIZE) {
-//                results.poll();
-//            }
-//        }
-//
-//        return results;
-//    }
 }
