@@ -1,4 +1,4 @@
-package main.java.com;
+package java.com.varun.dataprocessor;
 
 import java.io.BufferedReader;
 import java.io.File;

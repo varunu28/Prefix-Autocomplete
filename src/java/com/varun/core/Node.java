@@ -1,4 +1,4 @@
-package main.java.com;
+package java.com.varun.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;

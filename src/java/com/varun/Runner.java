@@ -1,5 +1,7 @@
-package main.java.com;
+package java.com.varun;
 
+import java.com.varun.core.Autocomplete;
+import java.com.varun.dataprocessor.InputDataProcessor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

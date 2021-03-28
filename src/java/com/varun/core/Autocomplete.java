@@ -1,5 +1,6 @@
-package main.java.com;
+package java.com.varun.core;
 
+import java.com.varun.policy.LRUCache;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
