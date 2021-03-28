@@ -99,4 +99,10 @@ As we have stored the prefix and associated words in a map, it becomes a ```Key-
  - Code to wipe out existing database of words and upload new word-list using a text file or an S3 bucket
  - Dockerize the application
 
-#### PR/Issues are welcome
+## TODO 
+ - [ ] Add unit tests
+ - [ ] Add end to end tests
+ - [ ] Clean up code
+    - [ ] Add interfaces for policies
+    - [ ] Make code in `Autocomplete.java` functional
+    - [ ] Add exception handling for data-processor with tests
