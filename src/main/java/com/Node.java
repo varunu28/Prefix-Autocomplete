@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Node {
-    String prefix;
-    Map<Character, Node> childrens;
-    List<String> completions;
 
-    boolean isWord;
+  String prefix;
+  Map<Character, Node> childrens;
+  List<String> completions;
 
-    public Node(String prefix) {
-        this.prefix = prefix;
-        this.childrens = new HashMap<>();
-        completions = new ArrayList<>();
-    }
+  boolean isWord;
+
+  public Node(String prefix) {
+    this.prefix = prefix;
+    this.childrens = new HashMap<>();
+    completions = new ArrayList<>();
+  }
 }

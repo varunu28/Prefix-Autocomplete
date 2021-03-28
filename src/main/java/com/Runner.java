@@ -6,17 +6,18 @@ import java.io.InputStreamReader;
 import java.util.Map;
 
 public class Runner {
-    public static void main(String[] args) throws IOException {
 
-        Map<String, Integer> words = new InputDataProcessor().getInputData();
-        Autocomplete autocomplete = new Autocomplete(words);
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  public static void main(String[] args) throws IOException {
 
-        while (true) {
-            autocomplete.
-                getTopKWordsForPrefix(br.readLine()).
-                stream().
-                forEach(System.out::println);
-        }
+    Map<String, Integer> words = new InputDataProcessor().getInputData();
+    Autocomplete autocomplete = new Autocomplete(words);
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    while (true) {
+      autocomplete.
+          getTopKWordsForPrefix(br.readLine()).
+          stream().
+          forEach(System.out::println);
     }
+  }
 }

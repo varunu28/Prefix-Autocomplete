@@ -9,22 +9,22 @@ import java.util.Map;
 
 public class InputDataProcessor {
 
-    public String pathname = "src/resources/data.txt";
+  public String pathname = "src/resources/data.txt";
 
-    public Map<String, Integer> getInputData() throws IOException {
-        Map<String, Integer> words = new HashMap<>();
+  public Map<String, Integer> getInputData() throws IOException {
+    Map<String, Integer> words = new HashMap<>();
 
-        File file = new File(pathname);
-        BufferedReader br = new BufferedReader(new FileReader(file));
+    File file = new File(pathname);
+    BufferedReader br = new BufferedReader(new FileReader(file));
 
-        String st;
-        while ((st = br.readLine()) != null) {
-            String word = st.split(",")[0];
-            int weight = Integer.parseInt(st.split(",")[1]);
+    String st;
+    while ((st = br.readLine()) != null) {
+      String word = st.split(",")[0];
+      int weight = Integer.parseInt(st.split(",")[1]);
 
-            words.put(word, words.getOrDefault(word, 0) + weight);
-        }
-
-        return words;
+      words.put(word, words.getOrDefault(word, 0) + weight);
     }
+
+    return words;
+  }
 }
